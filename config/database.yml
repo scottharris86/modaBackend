@@ -24,9 +24,27 @@
 #   <<: *default
 #   database: db/production.sqlite3
 
-default: &default
+# default: &default
+#   adapter: postgresql
+#   encoding: unicode
+#   # For details on connection pooling, see rails configuration guide
+#   # http://guides.rubyonrails.org/configuring.html#database-pooling
+#   pool: 5
+
+development:
   adapter: postgresql
   encoding: unicode
-  # For details on connection pooling, see rails configuration guide
-  # http://guides.rubyonrails.org/configuring.html#database-pooling
+  database: blog_development
+  pool: 5
+
+test:
+  adapter: postgresql
+  encoding: unicode
+  database: blog_development
+  pool: 5
+
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: blog_development
   pool: 5
