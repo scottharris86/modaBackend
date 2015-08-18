@@ -1,0 +1,2 @@
+module DefaultLocationsHelper
+end

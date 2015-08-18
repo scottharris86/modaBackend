@@ -1,0 +1,718 @@
+  [1m[36m (1.6ms)[0m  [1mCREATE TABLE "current_forecasts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "time" integer, "summary" varchar(255), "icon" varchar(255), "precip_intensity" integer, "precip_probability" integer, "temperature" integer, "apparent_temperature" integer, "dew_point" float, "humidity" float, "wind_speed" integer, "visibility" integer, "cloud_cover" float, "pressure" float, "location_id" integer, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (1.1ms)[0m  CREATE TABLE "daily_forecasts" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "time" integer, "summary" varchar(255), "icon" varchar(255), "sunrise_time" integer, "sunset_time" integer, "moon_phase" float, "precip_intensity" integer, "precip_probability" integer, "precip_type" varchar(255), "temperature_min" integer, "temperature_max" integer, "dew_point" float, "humidity" float, "wind_speed" float, "visibility" integer, "cloud_cover" float, "pressure" float, "location_id" integer, "created_at" datetime, "updated_at" datetime) 
+  [1m[36m (1.1ms)[0m  [1mCREATE TABLE "locations" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "name" varchar(255), "longitude" decimal, "latitude" decimal, "created_at" datetime, "updated_at" datetime) [0m
+  [1m[35m (1.2ms)[0m  CREATE TABLE "users" ("id" INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, "email" varchar(255) DEFAULT '' NOT NULL, "encrypted_password" varchar(255) DEFAULT '' NOT NULL, "reset_password_token" varchar(255), "reset_password_sent_at" datetime, "remember_created_at" datetime, "sign_in_count" integer DEFAULT 0 NOT NULL, "current_sign_in_at" datetime, "last_sign_in_at" datetime, "current_sign_in_ip" varchar(255), "last_sign_in_ip" varchar(255), "created_at" datetime NOT NULL, "updated_at" datetime NOT NULL) 
+  [1m[36m (0.1ms)[0m  [1mselect sqlite_version(*)[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "index_users_on_email" ON "users" ("email")
+  [1m[36m (0.1ms)[0m  [1m            SELECT sql
+            FROM sqlite_master
+            WHERE name='index_users_on_email' AND type='index'
+            UNION ALL
+            SELECT sql
+            FROM sqlite_temp_master
+            WHERE name='index_users_on_email' AND type='index'
+[0m
+  [1m[35m (1.0ms)[0m  CREATE UNIQUE INDEX "index_users_on_reset_password_token" ON "users" ("reset_password_token")
+  [1m[36m (1.0ms)[0m  [1mCREATE TABLE "schema_migrations" ("version" varchar(255) NOT NULL) [0m
+  [1m[35m (0.9ms)[0m  CREATE UNIQUE INDEX "unique_schema_migrations" ON "schema_migrations" ("version")
+  [1m[36m (0.1ms)[0m  [1mSELECT version FROM "schema_migrations"[0m
+  [1m[35m (0.8ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20150817184655')
+  [1m[36m (0.7ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20150817183918')[0m
+  [1m[35m (0.9ms)[0m  INSERT INTO "schema_migrations" (version) VALUES ('20150817184515')
+  [1m[36m (0.8ms)[0m  [1mINSERT INTO "schema_migrations" (version) VALUES ('20150817184632')[0m
+  [1m[35mActiveRecord::SchemaMigration Load (0.2ms)[0m  SELECT "schema_migrations".* FROM "schema_migrations"
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+  [1m[35mFixture Delete (0.3ms)[0m  DELETE FROM "current_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "daily_forecasts"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "locations"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "users"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 298486374)[0m
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:38:23', '2015-08-17 20:38:23', 298486374)
+  [1m[35m (1.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.4ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 298486374)
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:02', '2015-08-17 20:42:02', 298486374)
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 298486374)
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:42:57', '2015-08-17 20:42:57', 298486374)
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.7ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 298486374)
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 20:47:50', '2015-08-17 20:47:50', 298486374)
+  [1m[36m (0.4ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.7ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 298486374)
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:14:19', '2015-08-17 21:14:19', 298486374)
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 980190962)[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 298486374)
+SQLite3::ConstraintException: UNIQUE constraint failed: users.email: INSERT INTO "users" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:17:19', '2015-08-17 21:17:19', 298486374)
+  [1m[36m (0.5ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:19:18', '2015-08-17 21:19:18', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:29:25', '2015-08-17 21:29:25', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.8ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:36:59', '2015-08-17 21:36:59', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.2ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:37:37', '2015-08-17 21:37:37', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (2.5ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:38:08', '2015-08-17 21:38:08', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2015-08-17 21:38:09.015092"], ["updated_at", "2015-08-17 21:38:09.015092"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at") VALUES (?, ?)[0m  [["created_at", "2015-08-17 21:38:09.027676"], ["updated_at", "2015-08-17 21:38:09.027676"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.7ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:42:18', '2015-08-17 21:42:18', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2015-08-17 21:42:19.585599"], ["updated_at", "2015-08-17 21:42:19.585599"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.0ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at") VALUES (?, ?)[0m  [["created_at", "2015-08-17 21:42:19.600735"], ["updated_at", "2015-08-17 21:42:19.600735"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36mDailyForecast Load (0.1ms)[0m  [1mSELECT "daily_forecasts".* FROM "daily_forecasts"[0m
+  [1m[35m (0.7ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36m (0.1ms)[0m  [1mbegin transaction[0m
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[35m (0.1ms)[0m  rollback transaction
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.5ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:43:34', '2015-08-17 21:43:34', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.4ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2015-08-17 21:43:34.648641"], ["updated_at", "2015-08-17 21:43:34.648641"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at") VALUES (?, ?)[0m  [["created_at", "2015-08-17 21:43:34.661376"], ["updated_at", "2015-08-17 21:43:34.661376"]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.7ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:44:30', '2015-08-17 21:44:30', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (1.6ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.9ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 980190962)
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:45:23', '2015-08-17 21:45:23', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.2ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:05', '2015-08-17 21:46:05', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.5ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.6ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:46:57', '2015-08-17 21:46:57', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 980190962)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:48:49', '2015-08-17 21:48:49', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.6ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:00', '2015-08-17 21:52:00', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 980190962)
+  [1m[36mFixture Insert (0.0ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:52:38', '2015-08-17 21:52:38', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.6ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:53:51', '2015-08-17 21:53:51', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.6ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:54:39', '2015-08-17 21:54:39', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.2ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.3ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:55:35', '2015-08-17 21:55:35', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (2.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.6ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.2ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:58:36', '2015-08-17 21:58:36', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (0.9ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.4ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 21:59:47', '2015-08-17 21:59:47', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.1ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.1ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.9ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.2ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:00:23', '2015-08-17 22:00:23', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (2.7ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[36mActiveRecord::SchemaMigration Load (0.7ms)[0m  [1mSELECT "schema_migrations".* FROM "schema_migrations"[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+  [1m[36mFixture Delete (0.8ms)[0m  [1mDELETE FROM "current_forecasts"[0m
+  [1m[35mFixture Insert (0.7ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "current_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 298486374)[0m
+  [1m[35mFixture Delete (0.2ms)[0m  DELETE FROM "daily_forecasts"
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 980190962)[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "daily_forecasts" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 298486374)
+  [1m[36mFixture Delete (0.1ms)[0m  [1mDELETE FROM "locations"[0m
+  [1m[35mFixture Insert (0.1ms)[0m  INSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 980190962)
+  [1m[36mFixture Insert (0.1ms)[0m  [1mINSERT INTO "locations" ("created_at", "updated_at", "id") VALUES ('2015-08-17 22:01:05', '2015-08-17 22:01:05', 298486374)[0m
+  [1m[35mFixture Delete (0.1ms)[0m  DELETE FROM "users"
+  [1m[36m (1.0ms)[0m  [1mcommit transaction[0m
+  [1m[35m (0.0ms)[0m  begin transaction
+-------------------------------------------------------------------------
+ParseForecastHelperTest: test_can_save_model_with_data_from_serializeData
+-------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mSAVEPOINT active_record_1[0m
+  [1m[35mSQL (0.5ms)[0m  INSERT INTO "current_forecasts" ("created_at", "updated_at") VALUES (?, ?)  [["created_at", "2015-08-17 22:01:05.757719"], ["updated_at", "2015-08-17 22:01:05.757719"]]
+  [1m[36m (0.1ms)[0m  [1mRELEASE SAVEPOINT active_record_1[0m
+  [1m[35m (0.0ms)[0m  SAVEPOINT active_record_1
+  [1m[36mSQL (1.9ms)[0m  [1mINSERT INTO "daily_forecasts" ("cloud_cover", "created_at", "dew_point", "humidity", "icon", "moon_phase", "precip_intensity", "precip_probability", "precip_type", "pressure", "summary", "sunrise_time", "sunset_time", "temperature_max", "temperature_min", "time", "updated_at", "visibility", "wind_speed") VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)[0m  [["cloud_cover", 0.26], ["created_at", "2015-08-17 22:01:05.769956"], ["dew_point", 67.51], ["humidity", 0.63], ["icon", "rain"], ["moon_phase", 0.1], ["precip_intensity", 0], ["precip_probability", 0], ["precip_type", "rain"], ["pressure", 1017.46], ["summary", "drizzle in the evening."], ["sunrise_time", 1439806168], ["sunset_time", 1439855622], ["temperature_max", 89], ["temperature_min", 73], ["time", 1439784000], ["updated_at", "2015-08-17 22:01:05.769956"], ["visibility", 9], ["wind_speed", 4.99]]
+  [1m[35m (0.1ms)[0m  RELEASE SAVEPOINT active_record_1
+  [1m[36m (0.6ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+--------------------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_properly_parse_data_from_helper_method
+--------------------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
+  [1m[35m (0.1ms)[0m  begin transaction
+---------------------------------------------------------------
+ParseForecastHelperTest: test_i_can_recieve_a_forecast_from_api
+---------------------------------------------------------------
+  [1m[36m (0.1ms)[0m  [1mrollback transaction[0m
